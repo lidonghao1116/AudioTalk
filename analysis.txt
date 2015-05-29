@@ -1,0 +1,48 @@
+AudioRecorderButton
+    state：
+        normal
+        recording
+        want_to_cancel
+
+
+dialogManager
+    style:recording, want_to_cancel, time_too_short
+
+AudioManager,控制录音
+     prepare()
+     cancel()
+     release(),正常结束，释放资源
+     getVolume()
+
+伪码编写：
+class AudioRecoredeButton
+{
+    onTouchEvent()
+    {
+        Down:
+            changeButtonState(recording),
+            longclick->AudioMgr.prepare()->end prepare->DialogMgr.showDialog(recording)
+        MOVE:
+            if(wantcancel(x,y))
+            {
+                DialogMgr.showDialog(want_to_cancel)
+                changeButtonState(want_to_cancel)
+            }else
+            {
+                DialogMgr.showDialog(recording)
+                changeButtonState(recording)
+            }
+        UP:
+            if(curstate == want_to_cancel)
+            {
+                AudioMgr.cancel();
+            }
+            if(curstate == recording)
+            {
+                AudioMgr.release();
+                callbackToActivity();
+                updateListView();
+            }
+
+    }
+}
