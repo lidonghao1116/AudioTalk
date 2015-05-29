@@ -58,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 //TODO:播放动画，播放音频
+                // 要现在draw中定义play_animation,是一个animation-list
                 mAnimView = view.findViewById(R.id.id_recorder_anim);
                 mAnimView.setBackgroundResource(R.drawable.play_animation);
                 final AnimationDrawable anim = (AnimationDrawable) mAnimView.getBackground();
@@ -73,7 +74,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

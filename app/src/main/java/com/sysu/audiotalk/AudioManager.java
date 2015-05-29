@@ -14,12 +14,12 @@ import java.util.UUID;
  */
 public class AudioManager {
     private MediaRecorder mMediaRecorder;
+
+    //录音文件存储的路径
     private String mDir;
-
-
-
     private String mCurrentFilePath;
 
+    //MediaRecorder准备好之后的回调
     public AudioStateListener mListener;
 
     //单例模式的级别是application的
@@ -45,6 +45,7 @@ public class AudioManager {
     public void prepareAudio() {
         isPrepared =false;
 
+        // TODO:应该检测外部储存卡是否存在
         File dir = new File(mDir);
         if(!dir.exists())
             dir.mkdirs();
@@ -53,7 +54,7 @@ public class AudioManager {
         File file = new File(dir,fileName);
         mCurrentFilePath = file.getAbsolutePath();
 
-        //要了解一下mediaRecorder的状态转移图
+        //TODO:要了解一下mediaRecorder的状态转移图
         mMediaRecorder = new MediaRecorder();
         //设置文件路径
         mMediaRecorder.setOutputFile(file.getAbsolutePath());
@@ -72,7 +73,7 @@ public class AudioManager {
             isPrepared = true;
 
             if(mListener!= null) {
-                //更新界面
+                //更新界面,由外面的类来实现
                 mListener.wellPrepared();
             }
         } catch (IOException e) {
@@ -86,17 +87,11 @@ public class AudioManager {
      */
     private String generateFileName() {
 //        SimpleDateFormat simpleDateFormat;
-//
 //        simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-//
 //        Date date = new Date();
-//
 //        String str = simpleDateFormat.format(date);
-//
 //        Random random = new Random();
-//
 //        int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数
-//
 //        return rannum + str;// 当前时间
         return UUID.randomUUID().toString()+".amr";
     }
@@ -120,8 +115,8 @@ public class AudioManager {
     }
 
     public void cancel() {
-
         release();
+        //删除录音文件
         if (mCurrentFilePath != null) {
             File file = new File(mCurrentFilePath);
             file.delete();
@@ -141,5 +136,4 @@ public class AudioManager {
     public String getmCurrentFilePath() {
         return mCurrentFilePath;
     }
-
 }

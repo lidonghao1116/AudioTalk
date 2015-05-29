@@ -8,6 +8,7 @@ import java.io.IOException;
  * Created by user on 15/5/29.
  */
 public class MediaManager {
+    //TODO:了解MediaManager的状态转移流程
     private static MediaPlayer mMediaPlayer;
 
     private static boolean isPause;

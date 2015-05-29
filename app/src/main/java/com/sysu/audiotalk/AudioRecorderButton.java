@@ -162,6 +162,7 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
                     mAudioManager.release();
 
                     if(mAudioFinishListener != null) {
+                        //录音完成之后由activity回调
                         mAudioFinishListener.onFinish(mTime,mAudioManager.getmCurrentFilePath());
                     }
 
@@ -211,6 +212,7 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
         }
     }
 
+    //判断是否超出了区域
     private boolean wantToCancel(int x, int y) {
         if(x < 0 || x>getWidth())
             return true;
