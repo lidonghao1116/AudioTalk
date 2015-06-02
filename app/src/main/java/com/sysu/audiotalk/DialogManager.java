@@ -26,6 +26,8 @@ public class DialogManager {
     public void showRecordingDialog() {
         //dialog的初始化最好放在这，应为构造函数只在button的调用一次，dismiss之后dialog变为null
         //如果不调用第二次构造函数会有错误，所以初始化不放在构造函数里面
+
+        //先在style文件中加新的style
         mDialog = new Dialog(mContext,R.style.ThemeDialog);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         mDialog.setContentView(inflater.inflate(R.layout.dialog,null));
@@ -34,7 +36,6 @@ public class DialogManager {
         mVol = (ImageView) mDialog.findViewById(R.id.id_record_dialog_vol);
         mTv = (TextView) mDialog.findViewById(R.id.id_record_dialog_tv);
 
-        //现在style文件中加新的style
         mDialog.show();
 
     }
@@ -46,7 +47,7 @@ public class DialogManager {
             mTv.setVisibility(View.VISIBLE);
 
             mIcon.setImageResource(R.drawable.recorder);
-            mTv.setText("手指上滑，取消发送");
+            mTv.setText(R.string.dialog_text_up_cancel);
         }
     }
 
@@ -57,7 +58,7 @@ public class DialogManager {
             mTv.setVisibility(View.VISIBLE);
 
             mIcon.setImageResource(R.drawable.cancel);
-            mTv.setText("松开手指，取消发送");
+            mTv.setText(R.string.dialog_text_release_cancel);
         }
     }
 

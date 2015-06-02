@@ -41,6 +41,7 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
                 try {
                     //每0.1秒更新音量
                     Thread.sleep(100);
+                    //累计录音时间
                     mTime += 0.1;
                     mHandler.sendEmptyMessage(MSG_VOLUME_CHANGED);
                 } catch (InterruptedException e) {
@@ -68,10 +69,11 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
             }
         });
 
-        //应该判断外部储存卡是否存在
+        //TODO：应该判断外部储存卡是否存在
         String dir = Environment.getExternalStorageDirectory()+"/xu_recorder_audios";
         System.out.println(dir);
         mAudioManager = AudioManager.getInstance(dir);
+        //设置监听recorder准备好的事件
         mAudioManager.setOnAudioStateListener(this);
     }
 
@@ -96,12 +98,11 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_AUDIO_PREPARED:
-                    //真正显示应该在准备录音开始时
                     //同时要开始计时
                     mDialogManager.showRecordingDialog();
                     isRecording = true;
 
-                    //开启一个线程来获取音量
+                    //开启一个线程来获取音量，并计时
                     new Thread(mGetVolumeRunnable).start();
                     break;
                 case MSG_VOLUME_CHANGED:

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * Created by user on 15/5/28.
+ * 主要任务为两个，调用MediaRecorder和获取录音的存储路径
  */
 public class AudioManager {
     private MediaRecorder mMediaRecorder;
@@ -98,7 +99,7 @@ public class AudioManager {
 
     public int getVolume(int maxLevel) {
         if(isPrepared) {
-            //maxAmplitude的范围是1-32767
+            //maxAmplitude的范围是1-32767,映射到1 - maxLevel
             try {
                 return (maxLevel * mMediaRecorder.getMaxAmplitude()/32768)+1;
             }catch (Exception e) {
